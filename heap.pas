@@ -1,53 +1,51 @@
 program small_root;
 const maxn=1000000;
-type 
-	arr=array[1..maxn]of longint;
 var len,i,t,n:longint;
-	heap:arr;
+	heap:array[1..maxn]of longint;
 
-procedure swap(x,y:longint;var a:arr);
+procedure swap(x,y:longint);
 var k:longint;
 begin
-	k:=a[x];
-	a[x]:=a[y];
-	a[y]:=k;
+	k:=heap[x];
+	heap[x]:=heap[y];
+	heap[y]:=k;
 end;
 
-procedure up(x:longint;var a:arr);
+procedure up(x:longint);
 begin
-	if(x>1)and(a[x div 2]>a[x])then
+	if(x>1)and(heap[x div 2]>heap[x])then
 	begin 
-		swap(x div 2,x,a);
-		up(x div 2,a);
+		swap(x div 2,x);
+		up(x div 2);
 	end;
 end;
 
-procedure down(x:longint;var a:arr);
+procedure down(x:longint);
 begin
-	if(2*x<=len)and(a[2*x]<a[x])and(a[2*x+1]>=a[2*x]) then
+	if(2*x<=len)and(heap[2*x]<heap[x])and(heap[2*x+1]>=heap[2*x]) then
 	begin
-		swap(2*x,x,a);
-		down(2*x,a);
+		swap(2*x,x);
+		down(2*x);
 	end
-	else if(2*x+1<=len)and(a[2*x+1]<a[x])and(a[2*x+1]<a[2*x]) then
+	else if(2*x+1<=len)and(heap[2*x+1]<heap[x])and(heap[2*x+1]<heap[2*x]) then
 	begin
-		swap(2*x+1,x,a);
-		down(2*x+1,a);
+		swap(2*x+1,x);
+		down(2*x+1);
 	end;
 end;
 
-procedure insert(x:longint;var a:arr);
+procedure insert(x:longint);
 begin
 	inc(len);
-	a[len]:=x;
-	up(len,a);
+	heap[len]:=x;
+	up(len);
 end;
 
-procedure delete(x:longint;var a:arr);
+procedure delete(x:longint);
 begin
-	a[x]:=a[len];
+	heap[x]:=heap[len];
 	dec(len);
-	down(x,a);
+	down(x);
 end;
 
 begin
@@ -57,11 +55,11 @@ begin
 	begin
 		read(t);
 		if t=2 then writeln(heap[1])
-		else if t=3 then delete(1,heap)
+		else if t=3 then delete(1)
 		else if t=1 then
 		begin
 			readln(t);
-			insert(t,heap);
+			insert(t);
 		end;
 	end;
 end.
