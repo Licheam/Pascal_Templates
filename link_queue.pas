@@ -6,9 +6,10 @@ type
 	next:node;
 	end;
 	
-var n,i,t:longint;
+var t:longint;
 	rear:^node;
 	head,q:node;
+	com:string;
 	
 procedure push(x:longint);//push x 入队
 var p:node;
@@ -16,42 +17,46 @@ begin
 	new(p);
 	p^.next:=nil;
 	p^.data:=x;
-	if head=nil then head:=p
-	else 
-	begin
-		rear^^.next:=p;
-		rear:=@rear^^.next;
-	end;
+	rear^^.next:=p;
+	rear:=@rear^^.next;
 end;
 
 procedure pop();
 var p:node;
 begin
-	if head<>nil then
-	begin
-		p:=head;
-		head:=head^.next;
-		dispose(p);
-	end;
+	p:=head^.next;
+	head^.next:=p^.next;
+	dispose(p);
+	if rear^=nil then
+	rear:=@head^.next;
+end;
+
+procedure queini();
+var p:node;
+begin
+	new(p);
+	p^.next:=nil;
+	head:=p;
+	rear:=@head;
 end;
 
 begin
-	readln(n);
-	head:=nil;
-	rear:=@head;
-	for i:=1 to n do
+	queini;
+	readln(com);
+	while com<>'end' do
 	begin
-		readln(t);
-		if t=1 then push(i)
-		else if t=2 then pop
-		else 
+		if copy(com,1,4)='push' then
 		begin
-			q:=head;
-			while q<>nil do
-			begin
-				writeln(q^.data);
-				q:=q^.next;
-			end;
+			val(copy(com,6,length(com)-5),t);
+			push(t);
+		end
+		else if copy(com,1,3)='pop' then pop;
+		q:=head^.next;
+		while q<>nil do
+		begin
+			writeln(q^.data);
+			q:=q^.next;
 		end;
+		readln(com);
 	end;
 end.
