@@ -11,6 +11,15 @@ var t:longint;
 	head,q:node;
 	com:string;
 	
+procedure queini();//head node means nothing but front pointer.
+var p:node;
+begin
+	new(p);
+	p^.next:=nil;
+	head:=p;
+	rear:=@head;
+end;
+
 procedure push(x:longint);//push x 入队
 var p:node;
 begin
@@ -27,17 +36,8 @@ begin
 	p:=head^.next;
 	head^.next:=p^.next;
 	dispose(p);
-	if rear^=nil then
+	if rear^=nil then//对于只有两个node的linked list，pop会使得rear指向nil..此为特判。
 	rear:=@head^.next;
-end;
-
-procedure queini();
-var p:node;
-begin
-	new(p);
-	p^.next:=nil;
-	head:=p;
-	rear:=@head;
 end;
 
 begin
