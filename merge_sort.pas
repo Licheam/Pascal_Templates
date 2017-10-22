@@ -14,15 +14,14 @@ begin
 		if a[x]>a[y] then
 		begin
 			t[e]:=a[x];
-			dec(e);
 			dec(x);
 		end
 		else
 		begin
 			t[e]:=a[y];
-			dec(e);
 			dec(y);
 		end;
+		dec(e);
 	until(x<l)or(y=mid);
 	while x>=l do
 	begin
