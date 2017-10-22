@@ -10,18 +10,11 @@ begin
 end;
 
 function find(x:longint):longint;
-var	j,t:longint;
-	path:array[1..maxn]of longint;
+var	j:longint;
 begin
-	t:=0;
-	find:=x;
-	while fa[find]<>find do
-	begin
-		inc(t);
-		path[t]:=find;
-		find:=fa[find];
-	end;
-	for j:=1 to t-1 do fa[path[j]]:=find;
+	if fa[x]=x then exit(x);
+	fa[x]:=find(fa[x]);
+	exit(fa[x]);
 end;
 
 procedure union(x,y:longint);
