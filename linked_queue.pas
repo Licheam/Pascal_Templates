@@ -7,8 +7,7 @@ type
 	end;
 	
 var t:longint;
-	rear:^node;
-	head,q:node;
+	head,q,tail:node;
 	com:string;
 	
 procedure queini();//head node means nothing but front pointer.
@@ -17,7 +16,7 @@ begin
 	new(p);
 	p^.next:=nil;
 	head:=p;
-	rear:=@head;
+	tail:=p;
 end;
 
 procedure push(x:longint);//push x 入队
@@ -26,18 +25,18 @@ begin
 	new(p);
 	p^.next:=nil;
 	p^.data:=x;
-	rear^^.next:=p;
-	rear:=@rear^^.next;
+	tail^.next:=p;
+	tail:=p;
 end;
 
 procedure pop();
 var p:node;
 begin
+	if tail=head then exit;
 	p:=head^.next;
+	if tail=p then tail:=head;
 	head^.next:=p^.next;
 	dispose(p);
-	if rear^=nil then//对于只有两个node的linked list，pop会使得rear指向nil..此为特判。
-	rear:=@head^.next;
 end;
 
 begin
@@ -51,6 +50,7 @@ begin
 			push(t);
 		end
 		else if copy(com,1,3)='pop' then pop;
+		if tail=head then writeln('Empty');
 		q:=head^.next;
 		while q<>nil do
 		begin
