@@ -29,7 +29,7 @@ end;
 
 begin
 	readln(n,m);
-	fillchar(a,4*n,0);
+	fillchar(a,n shl 2,0);
 	for i:=1 to n do
 	begin
 		read(t);
@@ -74,7 +74,7 @@ end;
 
 begin
 	readln(n,m);
-	fillchar(a,4*n,0);
+	fillchar(a,n shl 2,0);
 	t[0]:=0;
 	for i:=1 to n do
 	begin
@@ -130,8 +130,8 @@ end;
 
 begin
 	readln(n,m);
-	fillchar(a1,4*n,0);
-	fillchar(a2,4*n,0);
+	fillchar(a1,n shl 2,0);
+	fillchar(a2,n shl 2,0);
 	t[0]:=0;
 	for i:=1 to n do
 	begin
