@@ -15,7 +15,7 @@ procedure qs(l,r:longint);//ascend
 var x,y,k:longint;
 begin
 	x:=l;y:=r;
-	k:=a[(l+r)div 2];
+	k:=a[(l+r)shr 1];
 	repeat
 		while a[x]<k do inc(x);
 		while a[y]>k do dec(y);
