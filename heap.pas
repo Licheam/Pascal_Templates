@@ -1,42 +1,37 @@
 program small_root;
 const maxn=1000000;
-var len,i,t,n,c:longint;
+var len,i,v,n,c:longint;
     a:array[1..maxn]of longint;
 
-function min(x,y:longint):longint;
-begin
-    if a[x]>a[y] then exit(y)
-    else exit(x);
-end;
-
 procedure swap(var x,y:longint);
-var k:longint;
+var t:longint;
 begin
-    k:=x;
+    t:=x;
     x:=y;
-    y:=k;
+    y:=t;
 end;
 
 procedure up(x:longint);
-var k:longint;
+var t:longint;
 begin
-    k:=x shr 1;
-    if (x>1)and(a[x]<a[k]) then
+    t:=x shr 1;
+    if (x>1)and(a[x]<a[t]) then
     begin
-        swap(a[x],a[k]);
-        up(k);
+        swap(a[x],a[t]);
+        up(t);
     end;
 end;
 
 procedure down(x:longint);
-var k,tem:longint;
+var t:longint;
 begin
-    k:=x shl 1;
-    tem:=min(k,k+1);
-    if (k<=len)and(a[tem]<a[x]) then
+    t:=x shl 1;
+    if t>len then exit
+    else if (t<len)and(a[t]>a[t+1]) then inc(t);
+    if a[t]<a[x] then
     begin
-        swap(a[x],a[tem]);
-        down(tem);
+        swap(a[x],a[t]);
+        down(t);
     end;
 end;
 
@@ -64,8 +59,8 @@ begin
         else if c=3 then delete(1)
         else if c=1 then
         begin
-            readln(t);
-            insert(t);
+            readln(v);
+            insert(v);
         end;
     end;
 end.
