@@ -95,7 +95,7 @@ begin
                 if tem<dist[e[q].node] then 
                 begin
                     //writeln('add ',hash[1],' to ',e[q].node,' to ',t);
-                    dist[e[q].node]:=t;
+                    dist[e[q].node]:=tem;
                     insert(tem,e[q].node);
                 end;
                 q:=e[q].next;
