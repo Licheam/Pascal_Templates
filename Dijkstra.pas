@@ -10,7 +10,8 @@ type edge=record
 
 var n,m,p,i,f,g,w,len,tot:longint;
     e:array[1..maxm]of edge;
-    a,h,hash,head:array[1..maxm]of longint;
+    h,hash:array[1..maxm]of longint;
+    dist,head:array[1..maxn]of longint;
   
 procedure swap(var x,y:longint);
 var t:longint;
@@ -18,6 +19,15 @@ begin
     t:=x;
     x:=y;
     y:=t;
+end;
+
+procedure add(x,y,z:longint);
+begin
+    inc(tot);
+    e[tot].v:=z;
+    e[tot].next:=head[x];
+    e[tot].node:=y;
+    head[x]:=tot;
 end;
 
 procedure up(x:longint);//small root.
@@ -62,40 +72,31 @@ begin
     down(x);
 end;
 
-procedure add(x,y,z:longint);
-begin
-    inc(tot);
-    e[tot].v:=z;
-    e[tot].next:=head[x];
-    e[tot].node:=y;
-    head[x]:=tot;
-end;
-
 procedure dijkstra(p:longint);
 var i,q:longint;
-    t:Int64;
+    tem:Int64;
 begin
     for i:=1 to n do
     begin
-        a[i]:=maxlongint;
+        dist[i]:=maxlongint;
         hash[i]:=i;
     end;
     len:=0;
-    a[p]:=0;
+    dist[p]:=0;
     insert(0,p);
     while len>0 do
     begin
-        if a[hash[1]]>=h[1] then
+        if dist[hash[1]]>=h[1] then
         begin
             q:=head[hash[1]];//取hash1的邻接表
             while q<>0 do
             begin
-                t:=h[1]+e[q].v;
-                if t<a[e[q].node] then 
+                tem:=h[1]+e[q].v;
+                if tem<dist[e[q].node] then 
                 begin
                     //writeln('add ',hash[1],' to ',e[q].node,' to ',t);
-                    a[e[q].node]:=t;
-                    insert(t,e[q].node);
+                    dist[e[q].node]:=t;
+                    insert(tem,e[q].node);
                 end;
                 q:=e[q].next;
             end;
@@ -115,5 +116,5 @@ begin
     end;
     dijkstra(p);
     for i:=1 to n do
-    write(a[i],' ');
+    write(dist[i],' ');
 end.
