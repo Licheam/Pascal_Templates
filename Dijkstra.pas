@@ -73,7 +73,7 @@ begin
 end;
 
 procedure dijkstra(p:longint);
-var i,q:longint;
+var q:longint;
     tem:Int64;
 begin
     filldword(dist,n,maxlongint);
