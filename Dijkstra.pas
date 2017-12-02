@@ -12,6 +12,7 @@ var n,m,p,i,f,g,w,len,tot:longint;
     e:array[1..maxm]of edge;
     h,hash:array[1..maxm]of longint;
     dist,head:array[1..maxn]of longint;
+    flag:array[1..maxn]of boolean;
   
 procedure swap(var x,y:longint);
 var t:longint;
@@ -72,32 +73,33 @@ begin
     down(x);
 end;
 
-procedure dijkstra(p:longint);
-var q:longint;
+procedure dijkstra(x:longint);
+var q,u:longint;
     tem:Int64;
 begin
     filldword(dist,n,maxlongint);
+    fillchar(flag,n,false);
     len:=0;
-    dist[p]:=0;
-    insert(0,p);
+    dist[x]:=0;
+    insert(0,x);
     while len>0 do
     begin
-        if dist[hash[1]]>=h[1] then
+        u:=hash[1];
+        flag[u]:=true;
+        //writeln('start:',u);
+        q:=head[u];//取hash1的邻接表
+        while q<>0 do
         begin
-            q:=head[hash[1]];//取hash1的邻接表
-            while q<>0 do
+            tem:=dist[u]+e[q].v;
+            if (not flag[e[q].node])and(tem<dist[e[q].node]) then 
             begin
-                tem:=h[1]+e[q].v;
-                if tem<dist[e[q].node] then 
-                begin
-                    //writeln('add ',hash[1],' to ',e[q].node,' to ',t);
-                    dist[e[q].node]:=tem;
-                    insert(tem,e[q].node);
-                end;
-                q:=e[q].next;
+                //writeln('add ',u,' to ',e[q].node,' to ',tem);
+                dist[e[q].node]:=tem;
+                insert(tem,e[q].node);
             end;
+            q:=e[q].next;
         end;
-        delete(1);
+        while (flag[hash[1]])and(len>0) do delete(1);
     end;
 end;
     
