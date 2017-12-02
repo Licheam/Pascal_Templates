@@ -76,11 +76,7 @@ procedure dijkstra(p:longint);
 var i,q:longint;
     tem:Int64;
 begin
-    for i:=1 to n do
-    begin
-        dist[i]:=maxlongint;
-        hash[i]:=i;
-    end;
+    filldword(dist,n,maxlongint);
     len:=0;
     dist[p]:=0;
     insert(0,p);
