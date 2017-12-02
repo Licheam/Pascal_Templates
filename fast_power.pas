@@ -6,8 +6,8 @@ begin
     r:=1;
     while y<>0 do
     begin
-        if (y and 1)=1 then r:=r*x mod n;//当i位为1时,r*=x^(2^i)
-        x:=x*x mod n;//x^(2^i)*x^(2^i)=x^(2^(i+1)); same as i++ for x;
+        if (y and 1)=1 then r:=r*x mod m;//当i位为1时,r*=x^(2^i)
+        x:=x*x mod m;//x^(2^i)*x^(2^i)=x^(2^(i+1)); same as i++ for x;
         y:=y shr 1;//i++ for y
     end;
     exit(r);
