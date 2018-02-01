@@ -1,3 +1,4 @@
+program kruskal;
 const maxn=5000;
     maxm=200000;
 var n,m,i,ans:longint;
