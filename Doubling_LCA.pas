@@ -6,7 +6,7 @@ type edge=record
     next:longint;
     end;
 var n,m,i,root,f,g,tot:longint;
-    head,depth:array[0..maxn]of longint;
+    head,depth:array[1..maxn]of longint;
     dist:array[1..maxn,0..maxlogn]of longint;
     e:array[1..2*maxn]of edge;
 
@@ -83,8 +83,8 @@ begin
         add(f,g);
         add(g,f);
     end;
-    depth[0]:=0;
-    dfs(root,0);
+    depth[root]:=0;
+    dfs(root,root);
     for i:=1 to m do
     begin
         readln(f,g);
