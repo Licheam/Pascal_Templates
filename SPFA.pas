@@ -3,7 +3,7 @@ const maxn=10000;
     maxm=500000;
 
 type edge=record
-    v:Int64;//value
+    w:Int64;//value
     next:longint;//next
     node:longint;//to
     end;
@@ -11,13 +11,13 @@ type edge=record
 var n,m,p,i,f,g,w,tot:longint;
     e:array[1..maxm]of edge;
     dist,head:array[1..maxn]of longint;
-    que:array[1..maxm]of longint;
+    que:array[1..maxn]of longint;
     flag:array[1..maxn]of boolean;
 
-procedure add(x,y,z:longint);
+procedure add(x,y,z:Int64);
 begin
     inc(tot);
-    e[tot].v:=z;
+    e[tot].w:=z;
     e[tot].next:=head[x];
     e[tot].node:=y;
     head[x]:=tot;
@@ -29,26 +29,30 @@ var h,t,v,q:longint;
 begin
     filldword(dist,n,maxlongint);
     fillchar(flag,n,false);
-    h:=1;t:=1;
+    h:=1;t:=2;
     que[1]:=p;
     dist[p]:=0;
     flag[p]:=true;
-    while h<=t do
+    while h<>t do
     begin
         v:=que[h];
         flag[v]:=false;
         inc(h);
+        if h>maxn then
+            h:=1;
         q:=head[v];
         while q<>0 do
         begin
-            tem:=dist[v]+e[q].v;
+            tem:=dist[v]+e[q].w;
             if tem<dist[e[q].node] then
             begin
                 dist[e[q].node]:=tem;
                 if not(flag[e[q].node]) then begin
-                    inc(t);
                     que[t]:=e[q].node;
                     flag[e[q].node]:=true;
+                    inc(t);
+                    if t>maxn then
+                        t:=1;
                 end;
             end;
             q:=e[q].next;
