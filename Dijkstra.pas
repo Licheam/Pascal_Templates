@@ -10,8 +10,7 @@ type edge=record
 
 var n,m,p,i,f,g,w,len,tot:longint;
     e:array[1..maxm]of edge;
-    h,hash:array[1..maxm]of longint;
-    dist,head:array[1..maxn]of longint;
+    dist,head,h,po:array[1..maxn]of longint;
     flag:array[1..maxn]of boolean;
   
 procedure swap(var x,y:longint);
@@ -35,10 +34,10 @@ procedure up(x:longint);//small root.
 var t:longint;
 begin
     t:=x shr 1;
-    if (x>1)and(h[x]<h[t]) then
+    if (x>1)and(dist[h[x]]<dist[h[t]]) then
     begin
+        swap(po[h[x]],po[h[t]]);
         swap(h[x],h[t]);
-        swap(hash[x],hash[t]);
         up(t);
     end;
 end;
@@ -48,58 +47,55 @@ var t:longint;
 begin
     t:=x shl 1;
     if t>len then exit
-    else if (t<len)and(h[t]>h[t+1]) then inc(t);
-    if h[t]<h[x] then
+    else if (t<len)and(dist[h[t]]>dist[h[t+1]]) then inc(t);
+    if dist[h[t]]<dist[h[x]] then
     begin
+        swap(po[h[x]],po[h[t]]);
         swap(h[x],h[t]);
-        swap(hash[x],hash[t]);
         down(t);
     end;
 end;
 
-procedure insert(x,y:longint);
-begin
-    inc(len);
-    h[len]:=x;
-    hash[len]:=y;
-    up(len);
-end;
-
 procedure delete(x:longint);
 begin
+    po[h[x]]:=0;
+    po[h[len]]:=x;
     h[x]:=h[len];
-    hash[x]:=hash[len];
     dec(len);
     down(x);
 end;
 
 procedure dijkstra(x:longint);
-var q,u:longint;
+var q,u,i:longint;
     tem:Int64;
 begin
     filldword(dist,n,maxlongint);
-    fillchar(flag,n,false);
-    len:=0;
+    //fillchar(flag,n,false);
+    for i:=1 to n do
+    begin
+        h[i]:=i;
+        po[i]:=i;
+    end;
+    len:=n;
     dist[x]:=0;
-    insert(0,x);
+    up(x);
     while len>0 do
     begin
-        u:=hash[1];
-        flag[u]:=true;
+        u:=h[1];
+        delete(1);
         //writeln('start:',u);
         q:=head[u];//取hash1的邻接表
         while q<>0 do
         begin
             tem:=dist[u]+e[q].v;
-            if (not flag[e[q].node])and(tem<dist[e[q].node]) then 
+            if (po[e[q].node]<>0)and(tem<dist[e[q].node]) then
             begin
                 //writeln('add ',u,' to ',e[q].node,' to ',tem);
                 dist[e[q].node]:=tem;
-                insert(tem,e[q].node);
+                up(po[e[q].node]);
             end;
             q:=e[q].next;
         end;
-        while (flag[hash[1]])and(len>0) do delete(1);
     end;
 end;
     
