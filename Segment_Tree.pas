@@ -24,6 +24,8 @@ begin
     a[right].sum:=a[right].sum*a[cur].multi mod p;
     a[left].multi:=a[left].multi*a[cur].multi mod p;
     a[right].multi:=a[right].multi*a[cur].multi mod p;
+    a[left].delta:=a[left].delta*a[cur].multi mod p;
+    a[right].delta:=a[right].delta*a[cur].multi mod p;
     a[cur].multi:=1;
 
     a[left].sum:=a[left].sum+a[cur].delta*(a[left].right-a[left].left);
