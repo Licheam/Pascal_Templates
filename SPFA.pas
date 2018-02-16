@@ -47,12 +47,23 @@ begin
             if tem<dist[e[q].node] then
             begin
                 dist[e[q].node]:=tem;
-                if not(flag[e[q].node]) then begin
-                    que[t]:=e[q].node;
-                    flag[e[q].node]:=true;
-                    inc(t);
-                    if t>maxn then
-                        t:=1;
+                if not(flag[e[q].node]) then
+                begin
+                    if (h<>t)and(tem<dist[que[1]]) then//SLF优化（small label first）
+                    begin
+                        dec(h);
+                        if h=0 then
+                            h:=maxn;
+                        que[h]:=e[q].node;
+                    end
+                    else
+                    begin
+                        que[t]:=e[q].node;
+                        flag[e[q].node]:=true;
+                        inc(t);
+                        if t>maxn then
+                            t:=1;
+                    end;
                 end;
             end;
             q:=e[q].next;
