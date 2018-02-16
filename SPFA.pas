@@ -8,7 +8,7 @@ type edge=record
     node:longint;//to
     end;
 
-var n,m,p,i,f,g,w,tot:longint;
+var n,m,p,i,f,g,w,tot,sum,cnt:longint;
     e:array[1..maxm]of edge;
     dist,head:array[1..maxn]of longint;
     que:array[1..maxn]of longint;
@@ -33,13 +33,26 @@ begin
     que[1]:=p;
     dist[p]:=0;
     flag[p]:=true;
+    sum:=dist[p];
+    cnt:=1;
     while h<>t do
     begin
+        while cnt*dist[que[h]]>sum do//LLL优化(large label last)
+        begin
+            que[t]:=que[h];
+            inc(t);
+            if t>maxn then
+                t:=1;
+            inc(h);
+            if h>maxn then
+                h:=1;
+        end;
         v:=que[h];
         flag[v]:=false;
         inc(h);
         if h>maxn then
             h:=1;
+        dec(sum,dist[v]);
         q:=head[v];
         while q<>0 do
         begin
@@ -49,7 +62,7 @@ begin
                 dist[e[q].node]:=tem;
                 if not(flag[e[q].node]) then
                 begin
-                    if (h<>t)and(tem<dist[que[1]]) then//SLF优化（small label first）
+                    if (h<>t)and(tem<dist[que[h]]) then//SLF优化(small label first)
                     begin
                         dec(h);
                         if h=0 then
@@ -64,6 +77,7 @@ begin
                         if t>maxn then
                             t:=1;
                     end;
+                    inc(sum,tem);
                 end;
             end;
             q:=e[q].next;
