@@ -1,3 +1,4 @@
+program Kahn;
 const maxn=100;
 var n,u,v,cnt,i,j,p:longint;
     e:array[1..maxn,1..maxn]of boolean;
