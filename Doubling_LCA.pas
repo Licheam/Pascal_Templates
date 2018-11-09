@@ -27,7 +27,7 @@ begin
 end;
 
 procedure dfs(x,last:longint);
-var i:longint;
+var i,p:longint;
 begin
     depth[x]:=depth[last]+1;
     dist[x,0]:=last;
@@ -37,12 +37,12 @@ begin
         dist[x,i]:=dist[dist[x,i-1],i-1];
         inc(i);
     end;
-    i:=head[x];
-    while i<>0 do
+    p:=head[x];
+    while p<>0 do
     begin
-        if e[i].node<>last then
-            dfs(e[i].node,x);
-        i:=e[i].next;
+        if e[p].node<>last then
+            dfs(e[p].node,x);
+        p:=e[p].next;
     end;
 end;
 
