@@ -3,11 +3,11 @@ const maxn=100000;
     maxt=262145;
 type
     node=record
-    left:Int64;
-    right:Int64;
-    sum:Int64;
-    delta:Int64;
-    multi:Int64;
+    left:longint;
+    right:longint;
+    sum:longint;
+    delta:longint;
+    multi:longint;
     end;
 
 var n,m,c,le,ri,k,i,j,p:longint;
@@ -28,14 +28,14 @@ begin
     a[right].delta:=a[right].delta*a[cur].multi mod p;
     a[cur].multi:=1;
 
-    a[left].sum:=a[left].sum+a[cur].delta*(a[left].right-a[left].left);
-    a[right].sum:=a[right].sum+a[cur].delta*(a[right].right-a[right].left);
-    a[left].delta:=a[left].delta+a[cur].delta;
-    a[right].delta:=a[right].delta+a[cur].delta;
+    a[left].sum:=a[left].sum+a[cur].delta*(a[left].right-a[left].left) mod p;
+    a[right].sum:=a[right].sum+a[cur].delta*(a[right].right-a[right].left) mod p;
+    a[left].delta:=a[left].delta+a[cur].delta mod p;
+    a[right].delta:=a[right].delta+a[cur].delta mod p;
     a[cur].delta:=0;
 end;
 
-procedure plus(cur,l,r,delta:Int64);
+procedure plus(cur,l,r,delta:longint);
 var left,right,mid:longint;
 begin
     if (l<=a[cur].left)and(a[cur].right<=r) then
@@ -58,7 +58,7 @@ begin
     end;
 end;
 
-procedure multiply(cur,l,r,multi:Int64);
+procedure multiply(cur,l,r,multi:longint);
 var left,right,mid:longint;
 begin
     if (l<=a[cur].left)and(a[cur].right<=r) then
@@ -82,7 +82,7 @@ begin
     end;
 end;
 
-function query(cur,l,r:longint):Int64;
+function query(cur,l,r:longint):longint;
 var left,right,mid:longint;
 begin
     if (l<=a[cur].left)and(a[cur].right<=r) then

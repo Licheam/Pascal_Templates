@@ -3,7 +3,7 @@ var a,b,n:Int64;
 function binpow(x,y,m:Int64):Int64;
 var r:Int64;
 begin
-    r:=1;
+    r:=1 mod m;
     while y<>0 do
     begin
         if (y and 1)=1 then r:=r*x mod m;//当i位为1时,r*=x^(2^i)
