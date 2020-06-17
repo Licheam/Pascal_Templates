@@ -12,7 +12,7 @@ var n,m,p,i,f,g,w,len,tot:longint;
     e:array[1..maxm]of edge;
     dist,head,h,po:array[1..maxn]of longint;
     flag:array[1..maxn]of boolean;
-  
+    
 procedure swap(var x,y:longint);
 var t:longint;
 begin
